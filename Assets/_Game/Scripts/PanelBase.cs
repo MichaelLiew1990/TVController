@@ -46,7 +46,7 @@ public class PanelBase : MonoBehaviour
         {
             OnEnter();
         }
-        else if (Input.GetKeyDown(KeyCode.Escape))
+        else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.B))
         {
             OnBack();
         }

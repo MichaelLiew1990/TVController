@@ -56,7 +56,7 @@ public class PanelSelect : PanelBase
     public override void OnEnable()
     {
         base.OnEnable();
-        EventSystem.current.SetSelectedGameObject(null);
+        if (EventSystem.current) EventSystem.current.SetSelectedGameObject(null);
     }
 
     public override void OnBack()
