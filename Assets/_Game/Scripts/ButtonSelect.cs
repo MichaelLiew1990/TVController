@@ -9,21 +9,29 @@ public enum ContentType
     Game
 }
 
-public class ButtonSelect : MonoBehaviour
+[SerializeField]
+public struct ItemContent
 {
     public string title;
+    public int beanCost;
+    public string introduction;
+    public GUITexture texture;
+    public MovieTexture movie;
+}
+
+public class ButtonSelect : MonoBehaviour
+{
+    public ItemContent item;
     public ContentType conType;
     public RectTransform rectTrans;
     public float baseScreenVal;//屏幕适应基数=屏幕宽度*0.1
     public bool isCurrent;
 
     private float tweenDelay;
-    private Text thisText;
 
     public void SetTitleName(string s)
     {
-        title = s;
-        thisText.text = s;
+        item.title = s;
     }
 
     public void SetTweenDelay(float f)
@@ -40,26 +48,23 @@ public class ButtonSelect : MonoBehaviour
     {
         isCurrent = true;
         DOTween.To(x => rectTrans.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, x),
-            baseScreenVal * 4f * 0.8f, baseScreenVal * 4f, tweenDelay);
+            baseScreenVal * 4f/* * 0.8f*/, baseScreenVal * 4f * 1.2f, tweenDelay);
         DOTween.To(x => rectTrans.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, x),
-            baseScreenVal * 3f * 0.8f, baseScreenVal * 3f, tweenDelay);
+            baseScreenVal * 3f/* * 0.8f*/, baseScreenVal * 3f * 1.2f, tweenDelay);
     }
 
     public void SetNotCurrent()
     {
         isCurrent = false;
         DOTween.To(x => rectTrans.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, x),
-            baseScreenVal * 4f, baseScreenVal * 4f * 0.8f, tweenDelay);
+            baseScreenVal * 4f * 1.2f, baseScreenVal * 4f/* * 0.8f*/, tweenDelay);
         DOTween.To(x => rectTrans.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, x),
-            baseScreenVal * 3f, baseScreenVal * 3f * 0.8f, tweenDelay);
+            baseScreenVal * 3f * 1.2f, baseScreenVal * 3f/* * 0.8f*/, tweenDelay);
     }
 
     void Awake()
     {
         baseScreenVal = (float)Screen.width * 0.1f;
-        
-        thisText = GetComponentInChildren<Text>();
-        thisText.text = title;
         rectTrans = gameObject.GetComponent<RectTransform>();
     }
 

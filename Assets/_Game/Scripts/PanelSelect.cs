@@ -14,14 +14,14 @@ public class PanelSelect : PanelBase
     public RawImage imgRightMask;
 
     private List<ButtonSelect> buttons = new List<ButtonSelect>();
-    private float offset;
+    private float offset;//左右图片偏移值
     private int curIndex;
     private float tweenDelayCount = 0f;
 
     void Awake()
     {
         float baseScreenVal = (float)Screen.width * 0.1f;
-        offset = baseScreenVal * 4.1f;
+        offset = baseScreenVal * 4.7f;
     }
 
     void Start()
@@ -33,7 +33,7 @@ public class PanelSelect : PanelBase
             obj.transform.SetParent(gameObject.transform);
             ButtonSelect btn = obj.GetComponent<ButtonSelect>();
             btn.SetTweenDelay(tweenDelay);
-            btn.SetTitleName("第" + (i + 1) + "个");
+            //btn.SetTitleName("第" + (i + 1) + "个");
             btn.rectTrans.anchoredPosition = new Vector2(i * offset, 0f);
             btn.SetNotCurrent();
             buttons.Add(btn);
@@ -72,7 +72,7 @@ public class PanelSelect : PanelBase
     public override void OnEnter()
     {
         if (tweenDelayCount < tweenDelay) return;
-        GameManager.inst.panelPlay.contentName = buttons[curIndex].title;
+        GameManager.inst.panelPlay.contentName = buttons[curIndex].item.title;
         GameManager.inst.SetPage(PageType.Play);
     }
 
@@ -118,9 +118,9 @@ public class PanelSelect : PanelBase
         }
 
         //渐变遮罩
-        TweenMaskAlpha(imgLeftMask, 0.7f);
-        TweenMaskAlpha(imgCenterMask, 1.0f);
-        TweenMaskAlpha(imgRightMask, 0.7f);
+        TweenMaskAlpha(imgLeftMask, 0.7f, 0.5f);
+        TweenMaskAlpha(imgCenterMask, 0.85f, 2.0f);
+        TweenMaskAlpha(imgRightMask, 0.7f, 0.5f);
 
         for (int i = 0; i < buttons.Count; i++)
         {
@@ -141,8 +141,8 @@ public class PanelSelect : PanelBase
     }
     
 
-    void TweenMaskAlpha(RawImage img, float toA)
+    void TweenMaskAlpha(RawImage img, float toA, float delay)
     {
-        DOTween.To(x => img.color = new Color(img.color.r, img.color.g, img.color.b, x), 0f, toA, tweenDelay * 2f);
+        DOTween.To(x => img.color = new Color(img.color.r, img.color.g, img.color.b, x), 0f, toA, delay);
     }
 }
