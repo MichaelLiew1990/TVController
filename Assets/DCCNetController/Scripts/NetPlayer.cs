@@ -2,6 +2,15 @@
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
+public enum NetCommand
+{
+    StartGame,
+    StopGame,
+    ResetGame,
+    BroadcastYes,
+    BroadcastNo
+}
+
 public class NetPlayer : NetworkBehaviour
 {
     [SyncVar]
@@ -24,6 +33,12 @@ public class NetPlayer : NetworkBehaviour
     }
 
     [Command]
+    public void CmdServerExec(NetCommand cmd)
+    {
+        //客户端不需要实现
+    }
+
+    [Command]
     public void CmdUpdateCarPose(Quaternion rotate, Vector3 pos, string clientIP)
     {
         //客户端不需要实现
@@ -38,7 +53,7 @@ public class NetPlayer : NetworkBehaviour
     [ClientRpc]
     void RpcStartGame(string sceneName)
     {
-        SceneManager.LoadScene("1_Game" + sceneName);
+        //TV端不需要实现
     }
 
     [ClientRpc]

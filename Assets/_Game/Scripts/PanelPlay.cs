@@ -9,9 +9,17 @@ public class PanelPlay : PanelBase
     public Text txtContentName;
     public GameObject btnPlay;
     public GameObject btnStop;
+    public GameObject btnReset;
 
     [HideInInspector]
     public string contentName;
+
+    void Start()
+    {
+        btnPlay.GetComponent<Button>().onClick.AddListener(StartGame);
+        btnStop.GetComponent<Button>().onClick.AddListener(StopGame);
+        btnReset.GetComponent<Button>().onClick.AddListener(ResetGame);
+    }
 
     public override void OnEnable()
     {
@@ -57,5 +65,23 @@ public class PanelPlay : PanelBase
     public override void OnBack()
     {
         GameManager.inst.SetPage(PageType.Select);
+    }
+
+    void StartGame()
+    {
+        print("StartGame");
+        if (GameManager.inst.net.GetNetPlayer()) GameManager.inst.net.GetNetPlayer().CmdServerExec(NetCommand.StartGame);
+    }
+
+    void StopGame()
+    {
+        print("StopGame");
+        if (GameManager.inst.net.GetNetPlayer()) GameManager.inst.net.GetNetPlayer().CmdServerExec(NetCommand.StopGame);
+    }
+
+    void ResetGame()
+    {
+        print("ResetGame");
+        if (GameManager.inst.net.GetNetPlayer()) GameManager.inst.net.GetNetPlayer().CmdServerExec(NetCommand.ResetGame);
     }
 }

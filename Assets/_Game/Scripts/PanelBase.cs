@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class PanelBase : MonoBehaviour
 {
     public GameObject firstHightlightButton;
+    KeyCode DPAD_CENTER = (KeyCode)10;//小米OK键
 
     public virtual void OnEnable()
     {
@@ -42,7 +43,7 @@ public class PanelBase : MonoBehaviour
         {
             OnDown();
         }
-        else if (Input.GetKeyDown(KeyCode.N) || Input.GetKeyDown(KeyCode.Joystick1Button0))
+        else if (Input.GetKeyDown(KeyCode.N) || Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(DPAD_CENTER))
         {
             OnEnter();
         }
@@ -56,17 +57,17 @@ public class PanelBase : MonoBehaviour
         }
     }
 
-    public virtual void OnLeft() { print("PanelBase:OnLeft"); }
+    public virtual void OnLeft() { GameManager.inst.AddDebugInfo("OnLeft"); }
 
-    public virtual void OnRight() { print("PanelBase:OnRight"); }
+    public virtual void OnRight() { GameManager.inst.AddDebugInfo("OnRight"); }
 
-    public virtual void OnUp() { print("PanelBase:OnUp"); }
+    public virtual void OnUp() { GameManager.inst.AddDebugInfo("OnUp"); }
 
-    public virtual void OnDown() { print("PanelBase:OnDown"); }
+    public virtual void OnDown() { GameManager.inst.AddDebugInfo("OnDown"); }
 
-    public virtual void OnBack() { print("PanelBase:OnBack"); }
+    public virtual void OnBack() { GameManager.inst.AddDebugInfo("OnBack"); }
 
-    public virtual void OnMenu() { print("PanelBase:OnMenu"); }
+    public virtual void OnMenu() { GameManager.inst.AddDebugInfo("OnMenu"); }
 
     public virtual void OnEnter()
     {

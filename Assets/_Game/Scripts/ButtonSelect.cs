@@ -16,7 +16,7 @@ public struct ItemContent
     public int beanCost;
     public string introduction;
     public GUITexture texture;
-    public MovieTexture movie;
+    //public MovieTexture movie;
 }
 
 public class ButtonSelect : MonoBehaviour

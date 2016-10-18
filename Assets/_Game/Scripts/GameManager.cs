@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum PageType
@@ -13,12 +11,16 @@ public enum PageType
 public class GameManager : MonoBehaviour
 {
     public GameObject netManagerPrefab;
-    public Button btnUse245Server;
-    public Text txtInfo;
+    public Text txtDebug;
     public static GameManager inst = null;
 
-    private ClientNetworkMgr net;
-    private bool isReadyForPlay = false;
+    [HideInInspector]
+    public ClientNetworkMgr net;
+
+    public void AddDebugInfo(string s)
+    {
+        txtDebug.text = s + "\n" + txtDebug.text;
+    }
 
     void Awake()
     {
@@ -30,43 +32,19 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        btnUse245Server.onClick.AddListener(Use245Seaver);
-        txtInfo.text = "正在连接...";
+        foreach (string s in Input.GetJoystickNames())
+        {
+            AddDebugInfo(s);
+        }
 
         if (!GameObject.Find("NetworkManager"))
         {
-            GameObject netObj = GameObject.Instantiate(netManagerPrefab) as GameObject;
+            GameObject netObj = Instantiate(netManagerPrefab) as GameObject;
             netObj.name = "NetworkManager";
             net = netObj.GetComponent<ClientNetworkMgr>();
         }
-        else
-        {
-            isReadyForPlay = true;
-            txtInfo.text = "";
-            btnUse245Server.gameObject.SetActive(false);
-        }
-
         //
         SetPage(PageType.Select);
-    }
-
-    void Update()
-    {
-        if (!isReadyForPlay)
-        {
-            if (net != null && net.netState == NetState.Connected)
-            {
-                isReadyForPlay = true;
-                txtInfo.text = "";
-                btnUse245Server.gameObject.SetActive(false);
-            }
-        }
-    }
-
-    void Use245Seaver()
-    {
-        net.StartServerByIP("192.168.15.245");
-        txtInfo.text = "正在连接192.168.15.245...";
     }
 
     /////================================================================================================
