@@ -3,12 +3,6 @@ using System.Collections;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public enum ContentType
-{
-    Movie,
-    Game
-}
-
 [SerializeField]
 public struct ItemContent
 {
@@ -16,13 +10,13 @@ public struct ItemContent
     public int beanCost;
     public string introduction;
     public GUITexture texture;
+    public ContentType conType;
     //public MovieTexture movie;
 }
 
 public class ButtonSelect : MonoBehaviour
 {
     public ItemContent item;
-    public ContentType conType;
     public RectTransform rectTrans;
     public float baseScreenVal;//屏幕适应基数=屏幕宽度*0.1
     public bool isCurrent;

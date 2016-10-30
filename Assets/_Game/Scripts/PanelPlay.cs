@@ -12,7 +12,7 @@ public class PanelPlay : PanelBase
     public GameObject btnReset;
 
     [HideInInspector]
-    public string contentName;
+    public ItemContent item;
 
     void Start()
     {
@@ -24,7 +24,7 @@ public class PanelPlay : PanelBase
     public override void OnEnable()
     {
         base.OnEnable();
-        txtContentName.text = "播放：" + contentName;
+        txtContentName.text = "播放：" + item.title;
         btnPlay.SetActive(true);
         btnStop.SetActive(false);
     }
@@ -70,18 +70,18 @@ public class PanelPlay : PanelBase
     void StartGame()
     {
         print("StartGame");
-        if (GameManager.inst.net.GetNetPlayer()) GameManager.inst.net.GetNetPlayer().CmdServerExec(NetCommand.StartGame);
+        if (GameManager.inst.net.GetNetPlayer()) GameManager.inst.net.GetNetPlayer().CmdTVServerExec(TVCommand.StartGame, item.conType, item.title);
     }
 
     void StopGame()
     {
         print("StopGame");
-        if (GameManager.inst.net.GetNetPlayer()) GameManager.inst.net.GetNetPlayer().CmdServerExec(NetCommand.StopGame);
+        if (GameManager.inst.net.GetNetPlayer()) GameManager.inst.net.GetNetPlayer().CmdTVServerExec(TVCommand.StopGame, item.conType, item.title);
     }
 
     void ResetGame()
     {
         print("ResetGame");
-        if (GameManager.inst.net.GetNetPlayer()) GameManager.inst.net.GetNetPlayer().CmdServerExec(NetCommand.ResetGame);
+        if (GameManager.inst.net.GetNetPlayer()) GameManager.inst.net.GetNetPlayer().CmdTVServerExec(TVCommand.ResetGame, item.conType, item.title);
     }
 }

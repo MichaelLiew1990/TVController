@@ -2,13 +2,22 @@
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
-public enum NetCommand
+public enum TVCommand//TV端用
 {
     StartGame,
     StopGame,
     ResetGame,
     BroadcastYes,
     BroadcastNo
+}
+
+public enum ContentType
+{
+    None,
+    Movie,
+    GameWithPad,
+    GameWithSteer,
+    Picture
 }
 
 public class NetPlayer : NetworkBehaviour
@@ -32,52 +41,45 @@ public class NetPlayer : NetworkBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
+    /// <summary>
+    /// 要求服务器执行某些命令，这个函数不暴露给客户端插件
+    /// </summary>
+    /// <param name="cmd">命令名</param>
+    /// <param name="type">内容类型</param>
+    /// <param name="arg">跟的参数，如播放影片的ID、运行游戏的ID</param>
     [Command]
-    public void CmdServerExec(NetCommand cmd)
-    {
-        //客户端不需要实现
-    }
-
-    [Command]
-    public void CmdUpdateCarPose(Quaternion rotate, Vector3 pos, string clientIP)
-    {
-        //客户端不需要实现
-    }
-
-    [Command]
-    public void CmdMovieEnd()
-    {
-        //客户端不需要实现
-    }
-
-    [ClientRpc]
-    void RpcStartGame(string sceneName)
+    public void CmdTVServerExec(TVCommand cmd, ContentType type, string arg)
     {
         //TV端不需要实现
     }
 
     [ClientRpc]
-    void RpcStopGame()
+    void RpcGameAlreadyStart()
     {
-        //TV端不需要实现
+        //TODO:
     }
 
     [ClientRpc]
-    void RpcPlayMovie(string mp4Name)
+    void RpcGameAlreadyStop()
     {
-        //TV端不需要实现
+        //TODO:
     }
 
     [ClientRpc]
-    void RpcUpdateHostIP(string hostIP)
+    public void RpcStartGame(string sceneName)
     {
-        ClientNetworkMgr net = GameObject.FindObjectOfType<ClientNetworkMgr>();
-        if (net != null)
-        {
-            net.hostIP = hostIP;
-        }
+        //客户端实现
+    }
 
-        //每次更新host时将服务端姿态置为初始值
-        CmdUpdateCarPose(Quaternion.identity, Vector3.zero, "xxx");
+    [ClientRpc]
+    public void RpcStopGame()
+    {
+        //客户端实现
+    }
+
+    [ClientRpc]
+    public void RpcUpdateHostIP(string hostIP)
+    {
+        //客户端实现
     }
 }

@@ -49,9 +49,9 @@ public class PanelSetting : PanelBase
 
     void TogglBroadcast(bool b)
     {
-        NetCommand cmd = NetCommand.BroadcastYes;
-        if (!b) cmd = NetCommand.BroadcastNo;
-        if (GameManager.inst.net.GetNetPlayer()) GameManager.inst.net.GetNetPlayer().CmdServerExec(cmd);
+        TVCommand cmd = TVCommand.BroadcastYes;
+        if (!b) cmd = TVCommand.BroadcastNo;
+        if (GameManager.inst.net.GetNetPlayer()) GameManager.inst.net.GetNetPlayer().CmdTVServerExec(cmd, ContentType.None, "");
     }
 
     void SetNetStateImg(NetState state)

@@ -26,6 +26,7 @@ public class PanelSelect : PanelBase
 
     void Start()
     {
+        //设置展示数据内容
         int total = 10;
         for (int i = 0; i < total; i++)
         {
@@ -33,11 +34,18 @@ public class PanelSelect : PanelBase
             obj.transform.SetParent(gameObject.transform);
             ButtonSelect btn = obj.GetComponent<ButtonSelect>();
             btn.SetTweenDelay(tweenDelay);
-            //btn.SetTitleName("第" + (i + 1) + "个");
+
+            btn.item.title = "File" + (i + 1);
+            btn.item.beanCost = 50;
+            btn.item.conType = ContentType.GameWithPad;
+            btn.item.introduction = "束带结发开始叫对方考虑，阿萨德发奖励卡加速度卡。洛手机打发了空间啊爱神，的箭法拉克加快速度就，付了款安静的弗兰克阿克苏的解放了看见卡上的副经理级！";
+            btn.item.texture = new GUITexture();
+
             btn.rectTrans.anchoredPosition = new Vector2(i * offset, 0f);
             btn.SetNotCurrent();
             buttons.Add(btn);
         }
+
         curIndex = 0;
         buttons[curIndex].SetCurrent();
 
@@ -72,7 +80,7 @@ public class PanelSelect : PanelBase
     public override void OnEnter()
     {
         if (tweenDelayCount < tweenDelay) return;
-        GameManager.inst.panelPlay.contentName = buttons[curIndex].item.title;
+        GameManager.inst.panelPlay.item = buttons[curIndex].item;
         GameManager.inst.SetPage(PageType.Play);
     }
 
